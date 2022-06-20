@@ -1,9 +1,9 @@
 {
     "current": {
-        "widget": "working-time",
+        "widget": "time-task-block",
         "publicity": "public",
         "repo": "/mnt/53338f51-6cd6-44e7-a184-483768ac0b00/Workspace/Workspace/Introvert/widgets/",
-        "branch": "working-time-experimental"
+        "branch": "time_task_block_public_main"
     },
     "default": {
         "subdir": "./widget/",
@@ -27,6 +27,7 @@
     },
     "widgets": {
         "working-time": {
+            "max-version": "unknown",
             "public": {
                 "max-version": "unknown",
                 "dir": "./working_time/",
@@ -46,17 +47,26 @@
             }
         },
         "block-field": {
+            "max-version": "unknown",
             "public": {
+                "max-version": "unknown",
                 "dir": "./block-field/"
             }
         },
         "time-task-block": {
+            "max-version": "unknown",
             "public": {
-                "dir": "./time_task_block/"
+                "max-version": "unknown",
+                "dir": "./time_task_block/",
+                "branch": [
+                    "time_task_block_public_main"
+                ]
             }
         },
         "catalogs-viewer": {
+            "max-version": "unknown",
             "public": {
+                "max-version": "unknown",
                 "dir": "./catalogs_viewer/"
             }
         }
