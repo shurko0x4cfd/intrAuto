@@ -1,0 +1,23 @@
+{
+  "name": "intrauto",
+  "version": "0.0.1",
+  "description": "Автоматизация всего",
+  "main": "js/ia.js",
+  "scripts": {
+    "recompile-all": "coffee -c -o js/ src/CoffeeScript/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shurko0x4cfd/intrAuto.git"
+  },
+  "author": "Alexander Stadnichenko",
+  "license": "unknown",
+  "bugs": {
+    "url": "https://github.com/shurko0x4cfd/intrAuto/issues"
+  },
+  "homepage": "https://github.com/shurko0x4cfd/intrAuto#readme",
+  "devDependencies": {
+    "coffeescript": "^2.7.0"
+  }
+}
