@@ -1,0 +1,14 @@
+
+*.xz
+*.tar
+*.gz
+*.zip
+*.rar
+*.7z
+
+*.log
+
+**/.git/
+**/node_modules/
+
+!.tmp
