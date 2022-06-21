@@ -8,7 +8,10 @@
 
 *.log
 
+zip/*
+.tmp/*
 **/.git/
 **/node_modules/
+__pycache__/
 
 !.tmp
