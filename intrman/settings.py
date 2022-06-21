@@ -35,8 +35,7 @@ def get_current ():
 			current = settings ['current']
 			default = settings ['default']
 
-			intrauto = settings ['path'] ['intrauto'] 
-			repository = current ['repo']
+			repository = current ['repository']
 			branch = current ['branch']
 			name = current ['widget']
 			publicity = current ['publicity']
@@ -54,8 +53,7 @@ def get_current ():
 			full_path = os .path .join (path, script)
 
 			return \
-			  { 'intrauto': intrauto,
-				'repository': repository,
+			  { 'repository': repository,
 				'branch': branch,
 				'name': name,
 				'publicity': publicity,
