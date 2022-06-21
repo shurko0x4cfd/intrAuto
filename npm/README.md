@@ -1,6 +1,6 @@
 # intrAuto/npm
   
-Версия на intrAuto CoffeeScript  
+Версия intrAuto на CoffeeScript  
   
 Для установки зависимостей `npm i`  
 Для перекомпиляции всего `npm run recompile-all`  
