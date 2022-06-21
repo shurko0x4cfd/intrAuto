@@ -1,23 +1,21 @@
 {
     "current": {
-        "widget": "time-task-block",
+        "widget": "working-time",
         "publicity": "public",
-        "repo": "/mnt/53338f51-6cd6-44e7-a184-483768ac0b00/Workspace/Workspace/Introvert/widgets/",
-        "branch": "time_task_block_public_main"
+        "repository": "/mnt/53338f51-6cd6-44e7-a184-483768ac0b00/Workspace/Workspace/Introvert/widgets/",
+        "branch": "task_time_block_public_main"
     },
     "default": {
         "subdir": "./widget/",
         "scriptname": "./script.js"
     },
     "path": {
-        "repo": {
+        "repository": {
             "widgets": "/mnt/53338f51-6cd6-44e7-a184-483768ac0b00/Workspace/Workspace/Introvert/widgets/"
         },
-        "intrauto": "/mnt/53338f51-6cd6-44e7-a184-483768ac0b00/Workspace/Workspace/Introvert/intrAuto/",
         "commit.text": "./.tmp/"
     },
     "global": {
-        "current-publicity": "public",
         "text_editor": [
             "vim",
             "joe",
@@ -36,6 +34,7 @@
                     "working-time-public_main",
                     "working-time-public-backend",
                     "working-time-public-task-29231-1",
+                    "working-time-public-task-29231-1-fork-1",
                     "working-time-public-task-29231-1-backend",
                     "working-time-public-task-29232-2",
                     "working-time-public-task-29232-2-backend",
@@ -55,11 +54,12 @@
         },
         "time-task-block": {
             "max-version": "unknown",
+            "intr-code": "time_task_block_public",
             "public": {
                 "max-version": "unknown",
                 "dir": "./time_task_block/",
                 "branch": [
-                    "time_task_block_public_main"
+                    "task_time_block_public_main"
                 ]
             }
         },
