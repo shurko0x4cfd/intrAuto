@@ -12,14 +12,15 @@ obligate_for_pack = ['something',]
 wrongs_for_public = \
 	['yadroWidget',
 	'YadroWidget',
-	'yadroFunctions',]
+	'yadroFunctions',
+	'this\.code =']
 
 obligate_for_public = \
    ['this\.version =',
 	'this\.intr_code =',]
 
-wrongs_for_private = ['this\.code =',]
-obligate_for_private = ['something',]
+wrongs_for_private = ['',]
+obligate_for_private = ['this\.code =',]
 
 wrongs_for_all = ['something',]
 obligate_for_all = ['something',]
