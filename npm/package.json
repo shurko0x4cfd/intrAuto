@@ -1,10 +1,11 @@
 {
+  "type": "module",
   "name": "intrauto",
   "version": "0.0.1",
   "description": "Автоматизация всего",
   "main": "js/ia.js",
   "scripts": {
-    "recompile-all": "coffee -c -o js/ src/CoffeeScript/",
+    "recompile-all": "coffee --bare --no-header -co js/ src/CoffeeScript/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
