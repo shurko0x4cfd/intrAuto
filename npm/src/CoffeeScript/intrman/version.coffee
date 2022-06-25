@@ -2,19 +2,24 @@
 # [Будет] всё для работы с версиями
 
 import fs from 'fs'
-import readline from 'readline'
+import readline from 'node:readline'
 import { get_current } from './settings.js'
+import { cl, read_line_while, first } from './auxiliary.js'
 
 
-
-get_version_str = (full_path) ->
-    full_path = get_current() .full_path
-    
-    input = fs .createReadStream full_path
-    readInterface = readline .createInterface { input, console: false }
-    readInterface .on 'line', line_handler
+script_full_path = get_current() .full_path
 
 
 line_handler = (line) ->
-    console .log line
+    matches = first Array .from line .matchAll /(.*)([\'"]+\d+\.\d+\.\d+[\'"]+)(.*)/g
+
+    if !matches
+        return cond: true
+
+    return cond: false, val: matches[1..3]
+
+
+
+cl script_version = await read_line_while script_full_path, line_handler
+
 

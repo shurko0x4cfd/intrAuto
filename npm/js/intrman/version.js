@@ -1,23 +1,34 @@
 // [Будет] всё для работы с версиями
-var input, readInterface, typer;
+var line_handler, script_full_path, script_version;
 
 import fs from 'fs';
 
-import readline from 'readline';
+import readline from 'node:readline';
 
 import {
-  settings_full_path
+  get_current
 } from './settings.js';
 
-input = fs.createReadStream(settings_full_path);
+import {
+  cl,
+  read_line_while,
+  first
+} from './auxiliary.js';
 
-readInterface = readline.createInterface({
-  input,
-  console: false
-});
+script_full_path = get_current().full_path;
 
-typer = function(line) {
-  return console.log(line);
+line_handler = function(line) {
+  var matches;
+  matches = first(Array.from(line.matchAll(/(.*)([\'"]+\d+\.\d+\.\d+[\'"]+)(.*)/g)));
+  if (!matches) {
+    return {
+      cond: true
+    };
+  }
+  return {
+    cond: false,
+    val: matches.slice(1, 4)
+  };
 };
 
-readInterface.on('line', typer);
+cl(script_version = (await read_line_while(script_full_path, line_handler)));
