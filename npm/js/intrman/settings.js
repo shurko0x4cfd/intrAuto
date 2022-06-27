@@ -6,7 +6,10 @@ import fs from 'fs';
 import path from 'path';
 
 import {
-  cl,
+  cl
+} from 'shugar';
+
+import {
   joinormalize,
   intrman_path
 } from './auxiliary.js';

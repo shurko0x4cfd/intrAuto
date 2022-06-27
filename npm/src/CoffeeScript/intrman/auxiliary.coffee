@@ -6,16 +6,12 @@ import {
 	normalize,
 	join
 } from 'path'
+
 import { createReadStream as create_read_stream } from 'fs'
 import { createInterface as create_interface } from 'node:readline'
 import { fileURLToPath as file_url_to_path } from 'url'
 
 
-ONLY = 0
-
-cl = console .log
-first = only = (arr) -> arr[0]
-second = (arr) -> arr[1]
 joinormalize = (...components) -> normalize join ...components
 
 __this_module_name = 'auxiliary'
@@ -24,7 +20,7 @@ intrman_path = this_file_dirname = dirname this_file_full_path
 intrauto_path = dirname intrman_path
 
 
-# async read_line_on_condition: file_name, line_handler -> undefined
+# async read_line_on_condition: condition, file_name, line_handler -> undefined or callback return value
 # sync  line_handler: line -> cond: bool [, ret: any]
 read_line_on_condition = (cond, file_name, line_handler) ->
 	warn_header = __this_module_name + ': read_line_on_condition: '
@@ -51,18 +47,17 @@ read_line_on_condition = (cond, file_name, line_handler) ->
 			return ret .val
 
 
-# Read file line by line while callback return true or until false
+# Read file line by line while callback return true or until return true 
 read_line_while = read_line_on_condition .bind null, false
 read_line_until = read_line_on_condition .bind null, true
 
 
 export \
 	{
-		cl,
-		first,
 		joinormalize,
 		intrman_path,
 		intrauto_path,
+		read_line_on_condition,
 		read_line_while,
 		read_line_until
 	}

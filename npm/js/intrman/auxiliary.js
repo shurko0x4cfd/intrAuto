@@ -1,5 +1,5 @@
 // Разные вспомогательные функции
-var ONLY, __this_module_name, cl, first, intrauto_path, intrman_path, joinormalize, only, read_line_on_condition, read_line_until, read_line_while, second, this_file_dirname, this_file_full_path;
+var __this_module_name, intrauto_path, intrman_path, joinormalize, read_line_on_condition, read_line_until, read_line_while, this_file_dirname, this_file_full_path;
 
 import {
   dirname,
@@ -19,18 +19,6 @@ import {
   fileURLToPath as file_url_to_path
 } from 'url';
 
-ONLY = 0;
-
-cl = console.log;
-
-first = only = function(arr) {
-  return arr[0];
-};
-
-second = function(arr) {
-  return arr[1];
-};
-
 joinormalize = function(...components) {
   return normalize(join(...components));
 };
@@ -43,7 +31,7 @@ intrman_path = this_file_dirname = dirname(this_file_full_path);
 
 intrauto_path = dirname(intrman_path);
 
-// async read_line_on_condition: file_name, line_handler -> undefined
+// async read_line_on_condition: condition, file_name, line_handler -> undefined or callback return value
 // sync  line_handler: line -> cond: bool [, ret: any]
 read_line_on_condition = async function(cond, file_name, line_handler) {
   var i, input, read_interface, ret, warn_header;
@@ -83,17 +71,16 @@ read_line_on_condition = async function(cond, file_name, line_handler) {
   }
 };
 
-// Read file line by line while callback return true or until false
+// Read file line by line while callback return true or until return true 
 read_line_while = read_line_on_condition.bind(null, false);
 
 read_line_until = read_line_on_condition.bind(null, true);
 
 export {
-  cl,
-  first,
   joinormalize,
   intrman_path,
   intrauto_path,
+  read_line_on_condition,
   read_line_while,
   read_line_until
 };

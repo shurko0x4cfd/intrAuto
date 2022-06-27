@@ -1,5 +1,5 @@
 // [Будет] всё для работы с версиями
-var line_handler, script_full_path, script_version;
+var check_for_version, h, manifest_full_path, manifest_version, map, map_all, parse_int, script_full_path, script_version, settings;
 
 import fs from 'fs';
 
@@ -10,14 +10,23 @@ import {
 } from './settings.js';
 
 import {
-  cl,
-  read_line_while,
-  first
+  read_line_while
 } from './auxiliary.js';
 
-script_full_path = get_current().full_path;
+import {
+  cl,
+  first,
+  second,
+  split
+} from 'shugar';
 
-line_handler = function(line) {
+settings = get_current();
+
+script_full_path = settings.full_path;
+
+manifest_full_path = settings.wpath + 'manifest.json';
+
+check_for_version = function(line) {
   var matches;
   matches = first(Array.from(line.matchAll(/(.*)([\'"]+\d+\.\d+\.\d+[\'"]+)(.*)/g)));
   if (!matches) {
@@ -31,4 +40,26 @@ line_handler = function(line) {
   };
 };
 
-cl(script_version = (await read_line_while(script_full_path, line_handler)));
+script_version = (await read_line_while(script_full_path, check_for_version));
+
+manifest_version = (await read_line_while(manifest_full_path, check_for_version));
+
+map = function(f, arr) {
+  return arr.map(f);
+};
+
+map_all = function(f, ...args) {
+  return map(f, args);
+};
+
+parse_int = function(ent) {
+  return parseInt(ent);
+};
+
+h = function(version) {
+  if (version) {
+    return map(parse_int, split('.', first(version[1].match(/\d+\.\d+\.\d+/))));
+  }
+};
+
+cl(map_all(h, script_version, manifest_version));

@@ -20,5 +20,8 @@
   "homepage": "https://github.com/shurko0x4cfd/intrAuto#readme",
   "devDependencies": {
     "coffeescript": "^2.7.0"
+  },
+  "dependencies": {
+    "shugar": "^0.0.2"
   }
 }

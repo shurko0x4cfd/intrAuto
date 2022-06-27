@@ -3,9 +3,9 @@
 
 import fs from 'fs'
 import path from 'path'
+import { cl } from 'shugar'
 
 import {
-    cl,
     joinormalize,
     intrman_path
 } from './auxiliary.js'
