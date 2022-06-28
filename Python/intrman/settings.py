@@ -4,7 +4,7 @@ import json
 
 
 dir = os .path .dirname (__file__)
-rel_path = '../settings/settings.json'
+rel_path = '../../settings/settings.json'
 
 settings_full_path = os .path .join (dir, rel_path)
 
@@ -45,9 +45,9 @@ def get_current ():
 			script = default ['scriptname']
 
 			if publicity == 'public':
-					sub_dir = default ['subdir']
+				sub_dir = default ['subdir']
 			else:
-					sub_dir = ''
+				sub_dir = ''
 
 			path = os .path .join (repository, dir, sub_dir)
 			full_path = os .path .join (path, script)

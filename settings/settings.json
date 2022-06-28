@@ -25,9 +25,9 @@
     },
     "widgets": {
         "working-time": {
-            "max_version": "unknown",
+            "max-version": "unknown",
             "public": {
-                "max_version": "unknown",
+                "max-version": "unknown",
                 "dir": "./working_time/",
                 "intr-code": "working-time_public",
                 "branch": [
@@ -46,17 +46,17 @@
             }
         },
         "block-field": {
-            "max_version": "unknown",
+            "max-version": "unknown",
             "public": {
-                "max_version": "unknown",
+                "max-version": "unknown",
                 "dir": "./block-field/"
             }
         },
         "time-task-block": {
-            "max_version": "unknown",
+            "max-version": "unknown",
             "intr-code": "time_task_block_public",
             "public": {
-                "max_version": "unknown",
+                "max-version": "unknown",
                 "dir": "./time_task_block/",
                 "branch": [
                     "task_time_block_public_main"
@@ -64,9 +64,9 @@
             }
         },
         "catalogs-viewer": {
-            "max_version": "unknown",
+            "max-version": "unknown",
             "public": {
-                "max_version": "unknown",
+                "max-version": "unknown",
                 "dir": "./catalogs_viewer/"
             }
         }
