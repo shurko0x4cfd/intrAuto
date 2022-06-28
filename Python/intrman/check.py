@@ -3,7 +3,10 @@ import sys
 import re
 
 
-wrongs_for_pull_request = ['test\.introvert\.bz',]
+wrongs_for_pull_request = \
+		['test\.introvert\.bz',
+		'/\*[\s]*eslint-disable[\s]*\*/',]
+		
 obligate_for_pull_request = ['yadro\.introvert\.bz',]
 
 wrongs_for_pack = ['yadro\.introvert\.bz',]
@@ -26,15 +29,8 @@ wrongs_for_all = ['something',]
 obligate_for_all = ['something',]
 
 
-def join_regex (*regex_lists, join_with = '|'):
-	result_regex = ''
-	sep = ''
-	for regex_list in regex_lists:
-		for regex in regex_list:
-			if regex != '':
-				result_regex += sep + regex
-				sep = join_with
-	return result_regex
+def join_re_lists (*regex_lists):
+	return '|' .join (regex for regex_list in regex_lists for regex in regex_list)
 
 
 def check (file, publicity, wrongspec):
@@ -43,7 +39,7 @@ def check (file, publicity, wrongspec):
 	else:
 		wrongs =  wrongs_for_private
 
-	wrongs = join_regex (wrongs, wrongspec, wrongs_for_all)
+	wrongs = join_re_lists (wrongs, wrongspec, wrongs_for_all)
 
 	if not wrongs:
 		return
