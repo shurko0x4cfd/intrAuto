@@ -5,7 +5,7 @@ import fs from 'fs'
 import readline from 'node:readline'
 import { get_current } from './settings.js'
 import { read_line_while } from './auxiliary.js'
-import { cl, first, second, split } from 'shugar'
+import { SECOND, cl, first, second, split } from 'shugar'
 
 
 settings = get_current()
@@ -33,7 +33,7 @@ parse_int = (ent) -> parseInt ent
 
 h = (version) ->
     if version
-        map parse_int, split '.', first version[1] .match /\d+\.\d+\.\d+/
+        map parse_int, split '.', first version[SECOND] .match /\d+\.\d+\.\d+/
 
 cl map_all h, script_version, manifest_version
 
