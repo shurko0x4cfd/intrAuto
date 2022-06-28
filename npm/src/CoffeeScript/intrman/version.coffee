@@ -5,7 +5,7 @@ import fs from 'fs'
 import readline from 'node:readline'
 import { get_current } from './settings.js'
 import { read_line_while } from './auxiliary.js'
-import { SECOND, cl, first, second, split } from 'shugar'
+import { SECOND, cl, first, second, split } from 'raffinade'
 
 
 settings = get_current()

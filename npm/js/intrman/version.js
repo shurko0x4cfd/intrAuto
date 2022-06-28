@@ -18,7 +18,7 @@ import {
   first,
   second,
   split
-} from 'shugar';
+} from 'raffinade';
 
 settings = get_current();
 
