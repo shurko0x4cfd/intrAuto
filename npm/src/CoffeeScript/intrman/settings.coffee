@@ -5,10 +5,12 @@ import fs from 'fs'
 import path from 'path'
 import { cl } from 'raffinade'
 
-import {
-    joinormalize,
-    intrman_path
-} from './auxiliary.js'
+import \
+    {
+        joinormalize,
+        intrman_path
+    }\
+from './auxiliary.js'
 
 
 settings_file_rel_path = '../../../settings/settings.json'

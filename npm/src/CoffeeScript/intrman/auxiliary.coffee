@@ -1,11 +1,13 @@
 
 # Разные вспомогательные функции
 
-import {
-	dirname,
-	normalize,
-	join
-} from 'path'
+import \
+	{
+		dirname,
+		normalize,
+		join
+	}\
+from 'path'
 
 import { createReadStream as create_read_stream } from 'fs'
 import { createInterface as create_interface } from 'node:readline'

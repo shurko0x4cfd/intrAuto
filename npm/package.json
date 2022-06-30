@@ -22,6 +22,7 @@
     "coffeescript": "^2.7.0"
   },
   "dependencies": {
-    "raffinade": "^0.0.5"
+    "node-zip": "^1.1.1",
+    "raffinade": "^0.0.8"
   }
 }
