@@ -36,6 +36,7 @@ split_version = (version) ->
 
 
 increase_one = (full_path, version, new_version) ->
+
 	version .line[SECOND] = new_version
 	updated_line = version .line .join ''
 	lines = []
@@ -46,6 +47,7 @@ increase_one = (full_path, version, new_version) ->
 
 
 increase_both = (script_full_path, manifest_full_path) ->
+
 	script_version = await read_line_while script_full_path, check_for_version()
 	manifest_version = await read_line_while manifest_full_path, check_for_version()
 
@@ -62,6 +64,7 @@ increase_both = (script_full_path, manifest_full_path) ->
 
 	max_version[2]++
 	new_version = max_version .join '.'
+
 	increase_one script_full_path, script_version, new_version
 	increase_one manifest_full_path, manifest_version, new_version
 
