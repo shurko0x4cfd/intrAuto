@@ -7,13 +7,16 @@
     },
     "default": {
         "subdir": "./widget/",
-        "scriptname": "./script.js"
+        "scriptname": "./script.js",
+        "commit-message-dir": "./.tmp/",
+        "commit-message-file-name": "commit.text",
+        "zip-dir": "./Zip"
     },
     "path": {
         "repository": {
             "widgets": "/mnt/путь/к/локальному/репозиторию/widgets/"
         },
-        "commit.text": "./.tmp/"
+        "commit-message-dir": "./.tmp/"
     },
     "global": {
         "text_editor": [
