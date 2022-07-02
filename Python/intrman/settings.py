@@ -3,10 +3,12 @@ import os, sys
 import json
 
 
-dir = os .path .dirname (__file__)
-rel_path = '../../settings/settings.json'
+this_module_dir = os .path .dirname (__file__)
 
-settings_full_path = os .path .join (dir, rel_path)
+shared_dir =  os .path .join (this_module_dir, '../../')
+
+settings_path_rel = './settings/settings.json'
+settings_full_path = os .path .join (shared_dir, settings_path_rel)
 
 
 def get_all ():

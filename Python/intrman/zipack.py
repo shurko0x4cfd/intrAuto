@@ -3,12 +3,12 @@ import os
 import zipfile
 
 
-def pack (intrauto_dir, path, name):
+def pack (zip_dir, path, name):
     oldir = os .getcwd ()
     os.chdir (path)
 
     try:
-        zip_path = os .path .join (intrauto_dir, 'zip/', name)
+        zip_path = os .path .join (zip_dir, name)
 
         if not os .path .exists (zip_path):
             os .makedirs (zip_path)
@@ -27,5 +27,5 @@ def pack (intrauto_dir, path, name):
     with zipfile .ZipFile (full_zip_path, 'w') as zip_file:
         for source_path in full_source_pathes: zip_file .write (source_path)
 
-
     os.chdir (oldir)
+    
