@@ -3,7 +3,7 @@
 // Позже будет проверять файлы перед паковкой на допустимые и недопустимые выражения,
 // Скрипт не вполне готов - не проверяет перед паковкой на test/yadro и др
 // Сохраняет архив в каталоге Zip, а будет как в Python-версии в Zip/название-виджета
-var EXIT_OK, current, manifest_full_path, name, publicity, script_full_path, wpath, wrong, zip, zipath, zipath_rel;
+var EXIT_OK, current, manifest_full_path, name, publicity, script_full_path, widget_dir, wrong, zipath, zipath_rel;
 
 import {
   get_current
@@ -34,22 +34,19 @@ import {
 
 EXIT_OK = 0;
 
-zip = JSZip();
-
 current = get_current();
 
-zipath_rel = '../../../Zip/widget.zip';
+zipath_rel = '../../../Zip/';
 
 zipath = joinormalize(intrman_path, zipath_rel);
 
-wpath = current.wpath;
+widget_dir = current.wpath;
 
-// name пока не используется
 name = current.name;
 
 script_full_path = current.full_path;
 
-manifest_full_path = wpath + 'manifest.json';
+manifest_full_path = widget_dir + 'manifest.json';
 
 publicity = current.publicity;
 
@@ -62,4 +59,4 @@ if (wrong) {
 
 increase_both(script_full_path, manifest_full_path);
 
-pack(zipath, wpath, name);
+pack(zipath, widget_dir, name);
