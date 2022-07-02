@@ -24,19 +24,16 @@ from './intrman/auxiliary.js'
 EXIT_OK = 0
 
 
-zip = JSZip()
 current = get_current()
 
-zipath_rel = '../../../Zip/widget.zip'
+zipath_rel = '../../../Zip/'
 zipath = joinormalize intrman_path, zipath_rel
 
-wpath = current .wpath
-
-# name пока не используется
+widget_dir = current .wpath
 name = current .name
 
 script_full_path = current .full_path
-manifest_full_path = wpath + 'manifest.json'
+manifest_full_path = widget_dir + 'manifest.json'
 publicity = current .publicity
 
 wrong = await for_pack script_full_path, publicity
@@ -49,4 +46,4 @@ if wrong
 increase_both script_full_path, manifest_full_path
 
 
-pack zipath, wpath, name
+pack zipath, widget_dir, name

@@ -6,7 +6,9 @@ import fs from 'fs';
 import \
     {
         readFileSync as read_file_sync,
-        writeFileSync as write_file_sync
+        writeFileSync as write_file_sync,
+        existsSync as exists_sync,
+        mkdirSync as mkdir_sync
     }\
 from 'fs';
 
@@ -16,10 +18,13 @@ import 'node-zip';
 
 zip = JSZip()
 
+# if global and global .JSZip
+#    delete global .JSZip
 
-fwalk = (wpath) ->
-	for await dir_item from await fs .promises .opendir wpath
-		chunk = joinormalize wpath, dir_item .name
+
+fwalk = (widget_dir) ->
+	for await dir_item from await fs .promises .opendir widget_dir
+		chunk = joinormalize widget_dir, dir_item .name
 
 		if dir_item .isDirectory()
 			yield from await fwalk chunk
@@ -29,15 +34,22 @@ fwalk = (wpath) ->
 	undefined
 
 
-pack = (zipath, wpath, name) ->
-    restr_index = wpath .length
+pack = (zipath, widget_dir, name) ->
+    zipath = joinormalize zipath, name
 
-    for await file_path from fwalk wpath
-        path_in_zip = file_path .slice restr_index
-        zip .file path_in_zip, read_file_sync file_path
+    if not exists_sync zipath
+        mkdir_sync zipath, recursive: true
+
+    zip_full_path = joinormalize zipath, './widget.zip'
+    restr_index = widget_dir .length
+
+    for await file_path from fwalk widget_dir
+        path_inside_zip = file_path .slice restr_index
+        zip .file path_inside_zip, read_file_sync file_path
 
     data = zip .generate base64: false, compression: 'DEFLATE'
-    write_file_sync zipath, data, 'binary'
+    write_file_sync zip_full_path, data, 'binary'
+    true
 
 
 export { pack }
