@@ -23,6 +23,6 @@
   },
   "dependencies": {
     "node-zip": "^1.1.1",
-    "raffinade": "^0.0.8"
+    "raffinade": ">=0.0.9"
   }
 }
