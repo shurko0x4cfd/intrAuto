@@ -9,9 +9,11 @@ import \
 	}\
 from 'path'
 
+import { execSync as exec_sync  } from 'child_process'
 import { createReadStream as create_read_stream } from 'fs'
 import { createInterface as create_interface } from 'node:readline'
 import { fileURLToPath as file_url_to_path } from 'url'
+import { cl, second } from 'raffinade'
 
 
 joinormalize = (...components) -> normalize join ...components
@@ -20,6 +22,7 @@ __this_module_name = 'auxiliary'
 this_file_full_path = file_url_to_path import .meta .url
 intrman_path = this_file_dirname = dirname this_file_full_path
 intrauto_path = dirname intrman_path
+shared_dir = joinormalize intrauto_path, '../../'
 
 
 # async read_line_on_condition: condition, file_name, line_handler -> undefined or callback return value
@@ -54,12 +57,26 @@ read_line_while = read_line_on_condition .bind null, false
 read_line_until = read_line_on_condition .bind null, true
 
 
+get_branch = () ->
+	git_on_status_response = String exec_sync 'git status'
+	match = git_on_status_response .match /On branch (.+)\n/
+
+	if not match
+		throw  message: __this_module_name + ': get_branch: Can\'t to recognize branch name'
+
+	branch_name = second match
+
+
+
+
 export \
 	{
 		joinormalize,
+		shared_dir,
 		intrman_path,
 		intrauto_path,
 		read_line_on_condition,
 		read_line_while,
-		read_line_until
+		read_line_until,
+		get_branch
 	}

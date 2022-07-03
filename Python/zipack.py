@@ -10,7 +10,7 @@ from intrman import settings
 current = settings .get_current ()
 widget_path = current ['path']
 shared_dir = settings .shared_dir
-zip_dir_rel = settings .get_all () ['default']['zip-dir']
+zip_dir_rel = settings .get_all () ['path']['zip-dir']
 zip_dir = os .path .join (shared_dir, zip_dir_rel)
 
 

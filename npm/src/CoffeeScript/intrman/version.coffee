@@ -1,10 +1,10 @@
 
-# [Будет] всё для работы с версиями
+# Для работы с версиями
 
 import { writeFileSync as write_file_sync } from 'fs'
 import readline from 'node:readline'
 import { read_line_while } from './auxiliary.js'
-import { SECOND, FIRST, u, cl, first, last, second, split, map, mapk, twix, pack, max, arr } from 'raffinade'
+import { SECOND, FIRST, u, cl, first, last, second, split, map, mapk, pack, max, arr } from 'raffinade'
 
 
 __this_module_name = 'version'

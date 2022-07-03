@@ -1,7 +1,7 @@
 
 # Черновики, тесты, эксперименты
 
-import { cl } from './intrman/auxiliary.js'
-import { get_current } from './intrman/settings.js'
+import { get_branch } from './intrman/auxiliary.js'
+import { cl } from 'raffinade'
 
-cl get_current()
+cl branch = get_branch ''

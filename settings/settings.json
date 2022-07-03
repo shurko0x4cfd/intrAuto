@@ -3,28 +3,25 @@
         "widget": "working-time",
         "publicity": "public",
         "repository": "/mnt/53338f51-6cd6-44e7-a184-483768ac0b00/Workspace/Workspace/Introvert/widgets",
-        "branch": "task_time_block_public_main"
+        "branch": "unknown"
     },
     "default": {
         "subdir": "./widget/",
         "scriptname": "./script.js",
-        "commit-message-dir": "./.tmp/",
-        "commit-message-file-name": "commit.text",
-        "zip-dir": "./Zip"
+        "commit-message-file-name": "commit.tmp",
+        "commit-message-editor": [
+            "vim",
+            "nvim",
+            "joe",
+            "code"
+        ]
     },
     "path": {
         "repository": {
             "widgets": "/mnt/путь/к/локальному/репозиторию/widgets/"
         },
+        "zip-dir": "./Zip/",
         "commit-message-dir": "./.tmp/"
-    },
-    "global": {
-        "text_editor": [
-            "vim",
-            "joe",
-            "code"
-        ],
-        "commit-text-file": "./commit.tmp"
     },
     "widgets": {
         "working-time": {

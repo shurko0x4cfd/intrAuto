@@ -9,6 +9,7 @@
 *.log
 
 zip/*
+settings/personal.json
 .tmp/*
 **/.git/
 **/node_modules/
