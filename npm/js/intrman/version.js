@@ -1,4 +1,4 @@
-// [Будет] всё для работы с версиями
+// Для работы с версиями
 var __this_module_name, check_for_version, increase_both, increase_one, parse_int, split_version;
 
 import {
@@ -22,7 +22,6 @@ import {
   split,
   map,
   mapk,
-  twix,
   pack,
   max,
   arr

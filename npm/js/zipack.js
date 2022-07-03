@@ -1,9 +1,6 @@
-// Плюует версии у скипта и манифеста и пакует каталог виджета
-
-// Позже будет проверять файлы перед паковкой на допустимые и недопустимые выражения,
-// Скрипт не вполне готов - не проверяет перед паковкой на test/yadro и др
-// Сохраняет архив в каталоге Zip, а будет как в Python-версии в Zip/название-виджета
-var EXIT_OK, current, manifest_full_path, name, publicity, script_full_path, widget_dir, wrong, zipath, zipath_rel;
+// Проверяет файлы перед паковкой на допустимые и недопустимые выражения,
+// плюсует версии у скипта и манифеста и пакует в каталог виджета
+var EXIT_OK, current, manifest_full_path, name, one_wrong, publicity, script_full_path, widget_dir, zipath, zipath_rel;
 
 import {
   get_current
@@ -18,8 +15,7 @@ import {
 } from './intrman/version.js';
 
 import {
-  cl,
-  first
+  cl
 } from 'raffinade';
 
 import {
@@ -29,6 +25,7 @@ import {
 import {
   read_line_while,
   joinormalize,
+  shared_dir,
   intrman_path
 } from './intrman/auxiliary.js';
 
@@ -36,9 +33,9 @@ EXIT_OK = 0;
 
 current = get_current();
 
-zipath_rel = '../../../Zip/';
+zipath_rel = './Zip/';
 
-zipath = joinormalize(intrman_path, zipath_rel);
+zipath = joinormalize(shared_dir, zipath_rel);
 
 widget_dir = current.wpath;
 
@@ -46,17 +43,19 @@ name = current.name;
 
 script_full_path = current.full_path;
 
-manifest_full_path = widget_dir + 'manifest.json';
+manifest_full_path = joinormalize(widget_dir, 'manifest.json');
 
 publicity = current.publicity;
 
-wrong = (await for_pack(script_full_path, publicity));
+one_wrong = (await for_pack(script_full_path, publicity));
 
-if (wrong) {
-  cl("\nzipack: File like script.js should not contain '" + wrong + "'");
+if (one_wrong) {
+  cl("\nzipack: File like script.js should not contain '" + one_wrong + "'");
   process.exit(EXIT_OK);
 }
 
 increase_both(script_full_path, manifest_full_path);
 
 pack(zipath, widget_dir, name);
+
+process.exit(EXIT_OK);

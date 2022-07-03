@@ -1,10 +1,12 @@
-  // Черновики, тесты, эксперименты
+// Черновики, тесты, эксперименты
+var branch;
+
 import {
-  cl
+  get_branch
 } from './intrman/auxiliary.js';
 
 import {
-  get_current
-} from './intrman/settings.js';
+  cl
+} from 'raffinade';
 
-cl(get_current());
+cl(branch = get_branch(''));

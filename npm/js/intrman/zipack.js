@@ -1,4 +1,4 @@
-// [Будет] всё для паковки в zip
+// Для паковки в zip
 var fwalk, pack, zip;
 
 import fs from 'fs';
@@ -18,10 +18,8 @@ import 'node-zip';
 
 zip = JSZip();
 
-if (global && global.JSZip) {
-  delete global.JSZip;
-}
-
+// if global and global .JSZip
+//    delete global .JSZip
 fwalk = async function*(widget_dir) {
   var chunk, dir_item, ref;
   ref = (await fs.promises.opendir(widget_dir));
