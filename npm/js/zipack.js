@@ -58,4 +58,4 @@ increase_both(script_full_path, manifest_full_path);
 
 pack(zipath, widget_dir, name);
 
-process.exit(EXIT_OK);
+// process .exit EXIT_OK
