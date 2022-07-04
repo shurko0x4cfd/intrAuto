@@ -23,15 +23,15 @@ zip = JSZip()
 
 
 fwalk = (widget_dir) ->
-	for await dir_item from await fs .promises .opendir widget_dir
-		chunk = joinormalize widget_dir, dir_item .name
+    for await dir_item from await fs .promises .opendir widget_dir
+        chunk = joinormalize widget_dir, dir_item .name
 
-		if dir_item .isDirectory()
-			yield from await fwalk chunk
-		else
-			if dir_item .isFile()
-				yield chunk
-	undefined
+        if dir_item .isDirectory()
+            yield from await fwalk chunk
+        else
+            if dir_item .isFile()
+                yield chunk
+    undefined
 
 
 pack = (zipath, widget_dir, name) ->

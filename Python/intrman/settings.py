@@ -2,7 +2,6 @@
 import os, sys
 import json
 from tkinter import FIRST
-from intrman.auxiliary import DotNot
 
 
 FIRST = 0

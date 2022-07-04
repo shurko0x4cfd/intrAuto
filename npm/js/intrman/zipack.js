@@ -24,6 +24,7 @@ fwalk = async function*(widget_dir) {
   var chunk, dir_item, ref;
   ref = (await fs.promises.opendir(widget_dir));
   for await (dir_item of ref) {
+    console.log(dir_item);
     chunk = joinormalize(widget_dir, dir_item.name);
     if (dir_item.isDirectory()) {
       yield* (await fwalk(chunk));
