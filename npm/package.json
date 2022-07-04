@@ -19,10 +19,10 @@
   },
   "homepage": "https://github.com/shurko0x4cfd/intrAuto#readme",
   "devDependencies": {
-    "coffeescript": "^2.7.0"
+    "coffeescript": "^2.7.0",
+    "raffinade": ">=0.0.9"
   },
   "dependencies": {
-    "node-zip": "^1.1.1",
-    "raffinade": ">=0.0.9"
+    "jszip": "3.7.0"
   }
 }
