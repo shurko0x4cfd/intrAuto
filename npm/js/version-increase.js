@@ -1,7 +1,9 @@
-// Только плюсует версии у скипта и манифеста, не пакует
+#!/usr/bin/env node
+;
 var manifest_full_path, script_full_path, settings;
 
 import {
+  // Только плюсует версии у скипта и манифеста, не пакует
   get_current
 } from './intrman/settings.js';
 

@@ -1,8 +1,10 @@
-// Проверяет файлы перед паковкой на допустимые и недопустимые выражения,
-// плюсует версии у скипта и манифеста и пакует в каталог виджета
+#!/usr/bin/env node
+;
 var EXIT_OK, current, manifest_full_path, name, one_wrong, publicity, script_full_path, widget_dir, zipath, zipath_rel;
 
 import {
+  // Проверяет файлы перед паковкой на допустимые и недопустимые выражения,
+  // плюсует версии у скипта и манифеста и пакует в каталог виджета
   get_current
 } from './intrman/settings.js';
 
