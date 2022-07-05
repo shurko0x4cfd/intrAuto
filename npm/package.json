@@ -3,9 +3,9 @@
   "name": "intrauto",
   "version": "0.0.1",
   "description": "Автоматизация всего",
-  "main": "js/ia.js",
+  "main": "JS/ia.js",
   "scripts": {
-    "recompile-all": "coffee --bare --no-header -co js/ src/CoffeeScript/",
+    "recompile-all": "coffee --bare --no-header -co JS/ src/CoffeeScript/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
