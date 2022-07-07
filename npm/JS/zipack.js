@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 ;
-var EXIT_OK, current, manifest_full_path, name, one_wrong, publicity, script_full_path, widget_dir, zipath, zipath_rel;
+var EXIT_OK, check_result, current, manifest_full_path, miss, name, one_wrong, publicity, s, script_full_path, widget_dir, zipath, zipath_rel;
 
 import {
   // Проверяет файлы перед паковкой на допустимые и недопустимые выражения,
@@ -17,7 +17,8 @@ import {
 } from './intrman/version.js';
 
 import {
-  cl
+  cl,
+  u
 } from 'raffinade';
 
 import {
@@ -49,10 +50,28 @@ manifest_full_path = joinormalize(widget_dir, 'manifest.json');
 
 publicity = current.publicity;
 
-one_wrong = (await for_pack(script_full_path, publicity));
+check_result = (await for_pack(script_full_path, publicity));
+
+one_wrong = miss = u;
+
+if (check_result) {
+  one_wrong = check_result.one_wrong;
+  miss = check_result.miss;
+}
 
 if (one_wrong) {
-  cl("\nzipack: File like script.js should not contain '" + one_wrong + "'");
+  cl("\nzipack: A file like script.js must not contain '" + one_wrong + "'");
+  process.exit(EXIT_OK);
+}
+
+if (miss && miss.length > 1) {
+  s = 's';
+} else {
+  s = '';
+}
+
+if (miss) {
+  cl("\nzipack: A file like script.js must contain an expression" + s + " corresponding to the following pattern" + s + ": \n\t" + miss.join(' \n\t'));
   process.exit(EXIT_OK);
 }
 
@@ -60,4 +79,4 @@ increase_both(script_full_path, manifest_full_path);
 
 pack(zipath, widget_dir, name);
 
-// process .exit EXIT_OK
+// process .exit EXIT_OK # <- крашит скрипт

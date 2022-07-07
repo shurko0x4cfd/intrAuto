@@ -2,7 +2,15 @@
 # Проверяет файлы на отсутствие недопустимых выражений и наличие обязательных
 
 import { read_line_while } from './auxiliary.js'
-import { u, cl, first } from 'raffinade'
+import { u, cl, first, arr } from 'raffinade'
+
+
+# TODO:
+# Так же необходимо проверять файл манифеста - webhook_url в манифесте
+# проверять версию handler.js - должна быть последней
+# проверять, реализован ли хотя бы onBlocked_
+# проверять, что в одной ветке нет одновременного изменения фронта и бэка
+# в публичных виджетах (по умолчаню) обязтелен каталог widget или backend. (но не оба сразу?)
 
 
 wrongs_for_pack = ['yadro\\.introvert\\.bz']
@@ -17,13 +25,18 @@ wrongs_for_public = \
 
 obligate_for_public = \
     [
-        'this\\.version =',
-        'this\\.intr_code =',
+        'const widget = this;',
 
-        'settings\\s*\\(.*\\)+\\s*{+|settings:\\s*\\(.*\\)+\\s*=>\\s*{+',
-        'bind_actions',
-        'onSave',
-        'init\\s*\\(.*\\)\\s*{+|init:\\s*\\(.*\\)\\s*=>\\s*{+'
+        'this\\.version\\s*=',
+        'this\\.intr_code\\s*=',
+        'this\\.modules\\s*=',
+
+        'settings\\s*\\(.*\\)+\\s*{+|settings:\\s*\\(.*\\)+\\s*=>\\s*',
+        'bind_actions\\s*\\(.*\\)+\\s*{+|bind_actions:\\s*\\(.*\\)+\\s*=>\\s*',
+        'onSave\\s*\\(.*\\)+\\s*{+|onSave:\\s*\\(.*\\)+\\s*=>\\s*',
+        'init\\s*\\(.*\\)\\s*{+|init:\\s*\\(.*\\)\\s*=>\\s*',
+
+        'return handler\\.wrap\\s*\\(.*\\);'
     ]
 
 wrongs_for_private = ['something']
@@ -40,24 +53,35 @@ for_pack = (file, publicity) ->
 	await check file, publicity, wrongs_for_pack
 
 
-check = (file, publicity, wrongspec) ->
+check = (file, publicity, wrongspec = [], obligatespec = []) ->
 
     if publicity == 'public'
         wrongs =  wrongs_for_public
+        obligates = arr obligate_for_public
     else
-        wrongs =  wrongs_for_private
+        wrongs = wrongs_for_private
+        obligates = arr obligate_for_private
 
     wrongs = join_re_lists wrongs, wrongspec
+    obligates = obligates .concat obligatespec
+    check_result = {}
 
-#    if not wrongs
-#        return
-    
     wrongs = await read_line_while file, wrongsearcher .bind null, wrongs
 
     if wrongs
-        return wrongs
+        check_result .one_wrong = wrongs
 
-    await read_line_while file, obligate_searcher .bind null, obligate_for_public
+    await read_line_while file, obligate_searcher .bind null, obligates
+
+    obligates = obligates .filter (itm) -> itm
+
+    if obligates .length
+        check_result .miss = obligates
+
+    if wrongs or obligates .length
+        return check_result
+    else
+        return u
 
 
 wrongsearcher = (regex, line) ->
@@ -74,16 +98,12 @@ wrongsearcher = (regex, line) ->
 obligate_searcher = (regex_set, line) ->
     for regex in regex_set
         match = line .match regex 
+
         if match
-            cl match
+            idx = regex_set .indexOf regex
+            delete regex_set[idx]
+
     return cond: true
-
-    if not match
-        return cond: true
-
-    match = first match
-
-    return cond: false, val: match
 
 
 join_re_lists = (...regex_lists) ->
