@@ -47,7 +47,6 @@ if check_result
 
 if one_wrong
     cl "\nzipack: A file like script.js must not contain '" + one_wrong + "'"
-    process .exit EXIT_OK
 
 if miss and miss .length > 1
     s = 's'
@@ -56,7 +55,9 @@ else
 
 if miss
     cl "\nzipack: A file like script.js must contain an expression" + s + " corresponding to the following pattern" + s + ": \n\t" + miss .join ' \n\t'
-    process .exit EXIT_OK
+
+if one_wrong or miss
+        process .exit EXIT_OK
 
 
 increase_both script_full_path, manifest_full_path
