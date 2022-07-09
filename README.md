@@ -23,7 +23,7 @@ npm update
 npm run recompile-all
 ```
 
-npm/JS/zipack.js - делает некоторые проверки плюсует версию в скрипте и в манифесте, пакует в архив intrAuto/Zip.  
+npm/JS/zipack.js - делает некоторые проверки плюсует версию в скрипте и в манифесте, пакует в архив intrAuto/Zip/название-виджета/widget.zip .  
 npm/JS/version-increase.js - плюсует версии не пакуя и не делая проверок.  
   
 Вызов скрипта, например:  
@@ -38,7 +38,7 @@ node ./что/то/там/intrAuto/npm/JS/zipack.js
 python3 ./что/то/там/intrAuto/Python/zipack.py
 
 # Если mode файлов u+x
-./что/то/там/intrAuto/npm/Python/zipack.py
+./что/то/там/intrAuto/Python/zipack.py
 ```
   
 npm/src/CoffeeScript - исходники.  
