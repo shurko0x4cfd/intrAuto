@@ -10,6 +10,9 @@
 
 zip/*
 settings/personal.json
+npm/src/CoffeeScript/test.coffee
+npm/JS/test.js
+npm/JS/js.js
 .tmp/*
 **/.git/
 **/node_modules/
