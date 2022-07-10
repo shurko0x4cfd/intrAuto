@@ -61,7 +61,6 @@ if (check_result) {
 
 if (one_wrong) {
   cl("\nzipack: A file like script.js must not contain '" + one_wrong + "'");
-  process.exit(EXIT_OK);
 }
 
 if (miss && miss.length > 1) {
@@ -72,6 +71,9 @@ if (miss && miss.length > 1) {
 
 if (miss) {
   cl("\nzipack: A file like script.js must contain an expression" + s + " corresponding to the following pattern" + s + ": \n\t" + miss.join(' \n\t'));
+}
+
+if (one_wrong || miss) {
   process.exit(EXIT_OK);
 }
 

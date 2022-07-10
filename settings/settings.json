@@ -30,6 +30,11 @@
                 "max-version": "unknown",
                 "dir": "./working_time/",
                 "intr-code": "working-time_public",
+                "allowed-to-change": [
+                    "working_time/widget",
+                    "working_time/backend",
+                    "_Bublic_widget/token_handler_config.php"
+                ],
                 "branch": [
                     "working-time-public_main",
                     "working-time-public-backend",
@@ -67,7 +72,10 @@
             "max-version": "unknown",
             "public": {
                 "max-version": "unknown",
-                "dir": "./catalogs_viewer/"
+                "dir": "./catalogs_viewer/",
+                "allowed-to-change": [
+                    "catalogs_viewer/widget"
+                ]
             }
         }
     }

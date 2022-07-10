@@ -1,11 +1,17 @@
 // Проверяет файлы на отсутствие недопустимых выражений и наличие обязательных
-var check, for_pack, join, join_re_lists, obligate_for_private, obligate_for_public, obligate_searcher, obligate_temp, wrongs_for_pack, wrongs_for_private, wrongs_for_public, wrongsearcher;
+var check, for_integrity, for_pack, join, join_re_lists, obligate_for_pack, obligate_for_private, obligate_for_public, obligate_searcher, warns_for_pr, wrongs_for_pack, wrongs_for_pr, wrongs_for_private, wrongs_for_public, wrongsearcher;
 
 import {
-  read_line_while
+  execSync as exec_sync
+} from 'child_process';
+
+import {
+  read_line_while,
+  get_branch
 } from './auxiliary.js';
 
 import {
+  FIRST,
   u,
   cl,
   first,
@@ -17,9 +23,26 @@ import {
 // проверять версию handler.js - должна быть последней
 // проверять, реализован ли хотя бы onBlocked_
 // проверять, что в одной ветке нет одновременного изменения фронта и бэка
-// в публичных виджетах (по умолчаню) обязтелен каталог widget или backend. (но не оба сразу?)
+// в публичных виджетах (по умолчаню) обязтелен каталог widget или backend.
+// (но не оба сразу?)
+
+// переместить регулярки в таблицы со строками вида:
+// 1: regex_uid, regex, comment и
+// 2: rule_uid, regex_uid, comment, flags,
+// где flags - последовательность или массив флагов наподобии wrong, obligate,
+// warning, notice, pack, pr, pull_request, public, private,
+// флаг нечувствительности к регистру (по умолчанию чувствително) и текст
+// сообщения при ошибке
 wrongs_for_pack = ['yadro\\.introvert\\.bz'];
 
+obligate_for_pack = ['something'];
+
+wrongs_for_pr = ['console.*log', '\\s+cl\\s*\\(', '/\*\s*eslint-disable\s*\*/', 'test\\.introvert\\.bz'];
+
+warns_for_pr = ['console.*trace'];
+
+// На самом деле нет. Настройки могут быть, например, в конфиге
+// obligate_for_pull_request = ['yadro\\.introvert\\.bz',]
 wrongs_for_public = ['yadroWidget', 'YadroWidget', 'yadroFunctions', 'this\\.code\\s*='];
 
 obligate_for_public = ['const widget = this;', 'this\\.version\\s*=', 'this\\.intr_code\\s*=', 'this\\.modules\\s*=', 'settings\\s*\\(.*\\)+\\s*{+|settings:\\s*\\(.*\\)+\\s*=>\\s*', 'bind_actions\\s*\\(.*\\)+\\s*{+|bind_actions:\\s*\\(.*\\)+\\s*=>\\s*', 'onSave\\s*\\(.*\\)+\\s*{+|onSave:\\s*\\(.*\\)+\\s*=>\\s*', 'init\\s*\\(.*\\)\\s*{+|init:\\s*\\(.*\\)\\s*=>\\s*', 'return handler\\.wrap\\s*\\(.*\\);'];
@@ -28,8 +51,8 @@ wrongs_for_private = ['something'];
 
 obligate_for_private = ['this\\.code\\s*='];
 
-obligate_temp = ['settings\\(\.\*\\)+'];
-
+// wrongs_for_all = \
+//    [ ]
 // obligate_for_all = \
 //     [ ]
 for_pack = async function(file, publicity) {
@@ -113,6 +136,39 @@ join = function(s, a) {
   return a.join(s);
 };
 
+// Проверяет, не затронуты ли файлы не имеющие отношения к делу
+for_integrity = function(allowed = [], branch_name) {
+  var git_diff_response, matchs, matchs_num, touched, touched_num;
+  if (!allowed.length) {
+    throw {
+      message: 'check: for_integrity: allowed list is not presented'
+    };
+  }
+  if (!branch_name) {
+    throw {
+      message: 'check: for_integrity: branch name is not presented'
+    };
+  }
+  allowed = join('|', allowed);
+  allowed = new RegExp('(' + allowed + ').*\n', 'g');
+  git_diff_response = String(exec_sync('git diff --name-only master ' + branch_name));
+  touched = git_diff_response.split('\n');
+  if ('' === touched.at(-1)) {
+    touched.pop(u);
+  }
+  if ('' === touched.at(FIRST)) {
+    touched.shift(u);
+  }
+  touched_num = touched.length;
+  matchs = git_diff_response.match(allowed);
+  matchs_num = matchs.length;
+  if (touched_num === matchs_num) {
+    return 'ok';
+  }
+  return {touched, matchs};
+};
+
 export {
+  for_integrity,
   for_pack
 };
