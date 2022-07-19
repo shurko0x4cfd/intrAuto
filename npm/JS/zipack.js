@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 ;
-var EXIT_OK, check_result, current, manifest_full_path, miss, name, one_wrong, publicity, s, script_full_path, widget_dir, zipath, zipath_rel;
+var check_result, current, manifest_full_path, miss, name, one_wrong, publicity, s, script_full_path, widget_dir, zipath, zipath_rel;
 
 import {
   // Проверяет файлы перед паковкой на допустимые и недопустимые выражения,
@@ -18,7 +18,8 @@ import {
 
 import {
   cl,
-  u
+  u,
+  EXIT_OK
 } from 'raffinade';
 
 import {
@@ -31,8 +32,6 @@ import {
   shared_dir,
   intrman_path
 } from './intrman/auxiliary.js';
-
-EXIT_OK = 0;
 
 current = get_current();
 

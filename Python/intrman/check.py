@@ -47,7 +47,7 @@ wrongs_for_private = ['something',]
 obligate_for_private = ['this\.code =',]
 
 
-wrongs_for_all = ['something',]
+wrongs_for_all = ['[\s]+$',] # Без пробельных символов в концах строк
 obligate_for_all = ['something',]
 
 

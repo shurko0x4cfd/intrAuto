@@ -9,7 +9,7 @@
 import { get_current } from './intrman/settings.js'
 import { for_pack } from './intrman/check.js'
 import { increase_both } from './intrman/version.js'
-import { cl, u } from 'raffinade'
+import { cl, u, EXIT_OK } from 'raffinade'
 import { pack } from './intrman/zipack.js'
 
 import \
@@ -22,11 +22,7 @@ import \
 from './intrman/auxiliary.js'
 
 
-EXIT_OK = 0
-
-
 current = get_current()
-
 
 zipath_rel = './Zip/'
 zipath = joinormalize shared_dir, zipath_rel

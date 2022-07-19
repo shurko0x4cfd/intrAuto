@@ -1,6 +1,6 @@
 {
     "current": {
-        "widget": "working-time",
+        "widget": "catalogs-viewer",
         "publicity": "public",
         "repository": "/mnt/53338f51-6cd6-44e7-a184-483768ac0b00/Workspace/Workspace/Introvert/widgets",
         "branch": "unknown"
@@ -33,8 +33,9 @@
                 "allowed-to-change": [
                     "working_time/widget",
                     "working_time/backend",
-                    "_Bublic_widget/token_handler_config.php"
+                    "_public_widget/token_handler_config.php"
                 ],
+                "target-for-pr-branch": "",
                 "branch": [
                     "working-time-public_main",
                     "working-time-public-backend",
@@ -75,7 +76,8 @@
                 "dir": "./catalogs_viewer/",
                 "allowed-to-change": [
                     "catalogs_viewer/widget"
-                ]
+                ],
+                "target-for-pr-branch": ""
             }
         }
     }
