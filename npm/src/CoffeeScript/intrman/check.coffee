@@ -44,8 +44,8 @@ warns_for_pr = \
 
 		# Без закомментрованнго кода, того что похоже на него
 		'((/\\*|//).*(var|let).*=)',
-		'((/\\*|//).*function.*(.*).*{)',
-		'((/\\*|//).*(.*).*=>)',
+		'((/\\*|//).*function.*\\(.*\\).*{)',
+		'((/\\*|//).*\\(.*\\).*=>)',
 	]
 
 # На самом деле нет. Настройки могут быть, например, в конфиге
@@ -88,7 +88,7 @@ for_pack = (file, publicity) ->
 	await check file, publicity, wrongs_for_pack
 
 
-for_pr = (file, publicity) ->
+for_pull_reqest = for_pr = (file, publicity) ->
 	await check file, publicity, wrongs_for_pr, u, warns_for_pr
 
 
@@ -202,4 +202,4 @@ for_integrity = (allowed = [], target_for_pr_branch = 'master', source_branch_na
 
 
 
-export { for_integrity, for_pack, for_pr }
+export { for_integrity, for_pack, for_pull_reqest, for_pr }
