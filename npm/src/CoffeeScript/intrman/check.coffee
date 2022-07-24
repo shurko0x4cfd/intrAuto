@@ -163,21 +163,23 @@ join_re_lists = (...regex_lists) ->
 
 # Проверяет, не затронуты ли файлы не имеющие отношения к делу
 
-for_integrity = (allowed = [], target_for_pr_branch = 'master', source_branch_name) ->
-
+for_integrity = (allowed = [], destination_branch_name, source_branch_name) ->
 	NULL = 0
 	LAST = -1
 
-	if not allowed .length
+	if not allowed or not allowed .length
 		throw message: 'check: for_integrity: allowed list is not presented'
 
-	if not source_branch_name
-		throw message: 'check: for_integrity: branch name is not presented'
+	if not source_branch_name or not destination_branch_name
+		throw message: 'check: for_integrity: branch or destination name is not presented'
+
+	if typeof source_branch_name != 'string' or typeof destination_branch_name != 'string'
+		throw message: 'check: for_integrity: branch or destination name is not presented'
 
 	allowed = join '|', allowed
 	allowed = new RegExp '(' + allowed + ').*\n', 'g'
 
-	git_diff_response = String exec_sync 'git diff --name-only ' + target_for_pr_branch + ' ' + source_branch_name
+	git_diff_response = String exec_sync 'git diff --name-only ' + destination_branch_name + ' ' + source_branch_name
 	touched = git_diff_response .split '\n'
 
 	if '' == touched .at LAST
@@ -196,6 +198,8 @@ for_integrity = (allowed = [], target_for_pr_branch = 'master', source_branch_na
 
 	if touched_num == matchs_num
 		return 'ok'
+	else
+		return 'fail'
 	
 	return { touched, matchs }
 

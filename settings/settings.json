@@ -35,7 +35,7 @@
                     "working_time/backend",
                     "_public_widget/token_handler_config.php"
                 ],
-                "target-for-pr-branch": "",
+                "target-for-pr-branch": "working-time-public_main",
                 "branch": [
                     "working-time-public_main",
                     "working-time-public-backend",
@@ -77,7 +77,10 @@
                 "allowed-to-change": [
                     "catalogs_viewer/widget"
                 ],
-                "target-for-pr-branch": ""
+                "target-for-pr-branch": "master",
+                "no-check": [
+                    "obligate_for_public"
+                 ]
             }
         }
     }

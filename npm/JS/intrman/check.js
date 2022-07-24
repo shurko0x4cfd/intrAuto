@@ -1,5 +1,5 @@
 // Проверяет файлы на отсутствие недопустимых выражений и наличие обязательных
-var check, for_integrity, for_pack, for_pr, join_re_lists, obligate_for_all, obligate_for_pack, obligate_for_private, obligate_for_public, obligate_searcher, warns_for_pr, wrongs_for_all, wrongs_for_pack, wrongs_for_pr, wrongs_for_private, wrongs_for_public, wrongsearcher;
+var check, for_integrity, for_pack, for_pr, for_pull_reqest, join_re_lists, obligate_for_all, obligate_for_pack, obligate_for_private, obligate_for_public, obligate_searcher, warns_for_pr, wrongs_for_all, wrongs_for_pack, wrongs_for_pr, wrongs_for_private, wrongs_for_public, wrongsearcher;
 
 import {
   execSync as exec_sync
@@ -49,8 +49,8 @@ warns_for_pr = [
   'console.*trace',
   // Без закомментрованнго кода, того что похоже на него
   '((/\\*|//).*(var|let).*=)',
-  '((/\\*|//).*function.*(.*).*{)',
-  '((/\\*|//).*(.*).*=>)'
+  '((/\\*|//).*function.*\\(.*\\).*{)',
+  '((/\\*|//).*\\(.*\\).*=>)'
 ];
 
 // На самом деле нет. Настройки могут быть, например, в конфиге
@@ -71,7 +71,7 @@ for_pack = async function(file, publicity) {
   return (await check(file, publicity, wrongs_for_pack));
 };
 
-for_pr = async function(file, publicity) {
+for_pull_reqest = for_pr = async function(file, publicity) {
   return (await check(file, publicity, wrongs_for_pr, u, warns_for_pr));
 };
 
@@ -154,23 +154,28 @@ join_re_lists = function(...regex_lists) {
 };
 
 // Проверяет, не затронуты ли файлы не имеющие отношения к делу
-for_integrity = function(allowed = [], target_for_pr_branch = 'master', source_branch_name) {
+for_integrity = function(allowed = [], destination_branch_name, source_branch_name) {
   var LAST, NULL, git_diff_response, matchs, matchs_num, touched, touched_num;
   NULL = 0;
   LAST = -1;
-  if (!allowed.length) {
+  if (!allowed || !allowed.length) {
     throw {
       message: 'check: for_integrity: allowed list is not presented'
     };
   }
-  if (!source_branch_name) {
+  if (!source_branch_name || !destination_branch_name) {
     throw {
-      message: 'check: for_integrity: branch name is not presented'
+      message: 'check: for_integrity: branch or destination name is not presented'
+    };
+  }
+  if (typeof source_branch_name !== 'string' || typeof destination_branch_name !== 'string') {
+    throw {
+      message: 'check: for_integrity: branch or destination name is not presented'
     };
   }
   allowed = join('|', allowed);
   allowed = new RegExp('(' + allowed + ').*\n', 'g');
-  git_diff_response = String(exec_sync('git diff --name-only ' + target_for_pr_branch + ' ' + source_branch_name));
+  git_diff_response = String(exec_sync('git diff --name-only ' + destination_branch_name + ' ' + source_branch_name));
   touched = git_diff_response.split('\n');
   if ('' === touched.at(LAST)) {
     touched.pop(u);
@@ -186,6 +191,8 @@ for_integrity = function(allowed = [], target_for_pr_branch = 'master', source_b
   }
   if (touched_num === matchs_num) {
     return 'ok';
+  } else {
+    return 'fail';
   }
   return {touched, matchs};
 };
@@ -193,5 +200,6 @@ for_integrity = function(allowed = [], target_for_pr_branch = 'master', source_b
 export {
   for_integrity,
   for_pack,
+  for_pull_reqest,
   for_pr
 };

@@ -4,34 +4,36 @@
 # Проверка перед ПР. Заготовка
 
 import { get_branch } from './intrman/auxiliary.js'
-import { get_all, get_current } from './intrman/settings.js'
+import { get_current } from './intrman/settings.js'
 import { for_integrity, for_pr } from './intrman/check.js'
 import { EXIT_OK, u, cl } from 'raffinade'
 
 
-source_branch = get_branch u
-
-all_settings = get_all u
 current = get_current u
 widget = current .widget
 publicity = current .publicity
-allowed = current .widget['allowed-to-change']
+allowed = widget['allowed-to-change']
 script_full_path = current .full_path
+source_branch = get_branch u
+destination_branch = widget['target-for-pr-branch']
 
 # TODO: Нужно извлекать целевую ветку из опций и возможность устанавливать
-# целевую ветку по умолчанию для виджета в настройках виджетов в settings.json
-target_for_pr_branch = u
+# целевую ветку по умолчанию для виджета в настройках виджетов и веток
+# в settings.json
 
-integrity = for_integrity allowed, target_for_pr_branch, source_branch
+if destination_branch
+    integrity = for_integrity allowed, destination_branch, source_branch
+else
+    integrity = u
+    cl '\nTarget branch is not specified. Integrity check skipped !'
 
 if integrity == 'ok'
-    cl 'Integrity ok'
+    cl '\nIntegrity ok'
 
-if integrity != 'ok'
-    cl 'Integrity check failed !'
+if integrity == 'fail'
+    cl '\nIntegrity check failed !'
     cl 'Touched files and finded matchs:'
     cl integrity
-    cl 'Stopped'
 
 check_result = await for_pr script_full_path, publicity
 

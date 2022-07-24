@@ -51,7 +51,7 @@ get_current = ->
         script,
         sub_dir,
         wpath,
-        full_path
+        full_path,
     }
 
 
