@@ -17,20 +17,19 @@ script_full_path = current .full_path
 source_branch = get_branch u
 destination_branch = widget['target-for-pr-branch']
 
-# TODO: Нужно извлекать целевую ветку из опций и возможность устанавливать
-# целевую ветку по умолчанию для виджета в настройках виджетов и веток
-# в settings.json
+
+# TODO: Нужно извлекать целевую ветку из опций
+# как вариант: cfpr --source some-name --dest other-name
 
 if destination_branch
     integrity = for_integrity allowed, destination_branch, source_branch
 else
-    integrity = u
     cl '\nTarget branch is not specified. Integrity check skipped !'
 
 if integrity == 'ok'
     cl '\nIntegrity ok'
 
-if integrity == 'fail'
+if integrity instanceof Array
     cl '\nIntegrity check failed !'
     cl 'Touched files and finded matchs:'
     cl integrity
