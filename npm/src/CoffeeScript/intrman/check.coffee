@@ -198,8 +198,6 @@ for_integrity = (allowed = [], destination_branch_name, source_branch_name) ->
 
 	if touched_num == matchs_num
 		return 'ok'
-	else
-		return 'fail'
 	
 	return { touched, matchs }
 

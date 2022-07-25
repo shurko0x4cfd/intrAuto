@@ -29,7 +29,7 @@ else
 if integrity == 'ok'
     cl '\nIntegrity ok'
 
-if integrity instanceof Array
+if integrity instanceof Object
     cl '\nIntegrity check failed !'
     cl 'Touched files and finded matchs:'
     cl integrity
