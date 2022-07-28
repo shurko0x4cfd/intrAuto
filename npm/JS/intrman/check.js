@@ -1,24 +1,24 @@
 // Проверяет файлы на отсутствие недопустимых выражений и наличие обязательных
-var check, for_integrity, for_pack, for_pr, for_pull_reqest, join_re_lists, obligate_for_all, obligate_for_pack, obligate_for_private, obligate_for_public, obligate_searcher, warns_for_pr, wrongs_for_all, wrongs_for_pack, wrongs_for_pr, wrongs_for_private, wrongs_for_public, wrongsearcher;
+var check, for_integrity, for_pack, for_pr, for_pull_reqest, join_re_lists, obligate_for_all, obligate_for_pack, obligate_for_pr, obligate_for_private, obligate_for_public, obligate_searcher, warns_for_pr, wrongs_for_all, wrongs_for_pack, wrongs_for_pr, wrongs_for_private, wrongs_for_public, wrongsearcher;
 
 import {
   execSync as exec_sync
 } from 'child_process';
 
 import {
-  read_line_while,
-  get_branch
+  read_line_while
 } from './auxiliary.js';
 
 import {
   FIRST,
+  LAST,
   u,
   cl,
   first,
   arr,
   join,
   empty,
-  aprodec
+  pack
 } from 'raffinade';
 
 // TODO:
@@ -41,9 +41,11 @@ import {
 // в исключения по нему
 wrongs_for_pack = ['yadro\\.introvert\\.bz'];
 
-obligate_for_pack = ['something'];
+obligate_for_pack = [''];
 
 wrongs_for_pr = ['console.*log', '\\s+cl\\s*\\(', '/\\*\\s*eslint-disable\\s*\\*/', 'test\\.introvert\\.bz'];
+
+obligate_for_pr = [''];
 
 warns_for_pr = [
   'console.*trace',
@@ -65,14 +67,14 @@ obligate_for_private = ['this\\.code\\s*='];
 
 wrongs_for_all = ['\\s+$']; // Без пробельных символов в концах строк
 
-obligate_for_all = ['/\\*\\*|//'];
+obligate_for_all = [''];
 
 for_pack = async function(file, publicity) {
-  return (await check(file, publicity, wrongs_for_pack));
+  return (await check(file, publicity, wrongs_for_pack, obligate_for_pack));
 };
 
 for_pull_reqest = for_pr = async function(file, publicity) {
-  return (await check(file, publicity, wrongs_for_pr, u, warns_for_pr));
+  return (await check(file, publicity, wrongs_for_pr, obligate_for_pr, warns_for_pr));
 };
 
 check = async function(file, publicity, wrongspec = [], obligatespec = [], warn_spec = []) {
@@ -85,7 +87,7 @@ check = async function(file, publicity, wrongspec = [], obligatespec = [], warn_
     obligates = arr(obligate_for_private);
   }
   wrongs = join_re_lists(wrongs, wrongs_for_all, wrongspec);
-  obligates = obligates.concat(obligatespec);
+  obligates = pack(...obligate_for_all, ...obligates, ...obligatespec);
   check_result = {};
   wrongs = (await read_line_while(file, wrongsearcher.bind(null, wrongs)));
   if (wrongs) {
@@ -155,9 +157,8 @@ join_re_lists = function(...regex_lists) {
 
 // Проверяет, не затронуты ли файлы не имеющие отношения к делу
 for_integrity = function(allowed = [], destination_branch_name, source_branch_name) {
-  var LAST, NULL, git_diff_response, matchs, matchs_num, touched, touched_num;
+  var NULL, git_diff_response, matchs, matchs_num, touched, touched_num;
   NULL = 0;
-  LAST = -1;
   if (!allowed || !allowed.length) {
     throw {
       message: 'check: for_integrity: allowed list is not presented'
@@ -191,8 +192,6 @@ for_integrity = function(allowed = [], destination_branch_name, source_branch_na
   }
   if (touched_num === matchs_num) {
     return 'ok';
-  } else {
-    return 'fail';
   }
   return {touched, matchs};
 };

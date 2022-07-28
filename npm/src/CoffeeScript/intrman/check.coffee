@@ -2,8 +2,8 @@
 # Проверяет файлы на отсутствие недопустимых выражений и наличие обязательных
 
 import { execSync as exec_sync  } from 'child_process'
-import { read_line_while, get_branch } from './auxiliary.js'
-import { FIRST, u, cl, first, arr, join, empty, aprodec } from 'raffinade'
+import { read_line_while } from './auxiliary.js'
+import { FIRST, LAST, u, cl, first, arr, join, empty, pack } from 'raffinade'
 
 
 # TODO:
@@ -27,7 +27,7 @@ import { FIRST, u, cl, first, arr, join, empty, aprodec } from 'raffinade'
 
 
 wrongs_for_pack = ['yadro\\.introvert\\.bz']
-obligate_for_pack = ['something']
+obligate_for_pack = ['']
 
 
 wrongs_for_pr = \
@@ -37,6 +37,8 @@ wrongs_for_pr = \
 		'/\\*\\s*eslint-disable\\s*\\*/',
 		'test\\.introvert\\.bz'
 	]
+
+obligate_for_pr = ['']
 
 warns_for_pr = \
 	[
@@ -81,15 +83,15 @@ obligate_for_private = ['this\\.code\\s*=']
 
 wrongs_for_all = ['\\s+$'] # Без пробельных символов в концах строк
 
-obligate_for_all = ['/\\*\\*|//']
+obligate_for_all = ['']
 
 
 for_pack = (file, publicity) ->
-	await check file, publicity, wrongs_for_pack
+	await check file, publicity, wrongs_for_pack, obligate_for_pack
 
 
 for_pull_reqest = for_pr = (file, publicity) ->
-	await check file, publicity, wrongs_for_pr, u, warns_for_pr
+	await check file, publicity, wrongs_for_pr, obligate_for_pr , warns_for_pr
 
 
 check = (file, publicity, wrongspec = [], obligatespec = [], warn_spec = []) ->
@@ -102,7 +104,7 @@ check = (file, publicity, wrongspec = [], obligatespec = [], warn_spec = []) ->
 		obligates = arr obligate_for_private
 
 	wrongs = join_re_lists wrongs, wrongs_for_all, wrongspec
-	obligates = obligates .concat obligatespec
+	obligates = pack ...obligate_for_all, ...obligates, ...obligatespec
 	check_result = {}
 
 	wrongs = await read_line_while file, wrongsearcher .bind null, wrongs
@@ -165,7 +167,6 @@ join_re_lists = (...regex_lists) ->
 
 for_integrity = (allowed = [], destination_branch_name, source_branch_name) ->
 	NULL = 0
-	LAST = -1
 
 	if not allowed or not allowed .length
 		throw message: 'check: for_integrity: allowed list is not presented'

@@ -60,7 +60,7 @@ obligate_for_private = ['this\.code =',]
 
 
 wrongs_for_all = ['\s+\n+$',] # Без пробельных символов в концах строк
-obligate_for_all = ['something',]
+obligate_for_all = ['',]
 
 
 def join_re_lists (*regex_lists):
@@ -77,7 +77,7 @@ def check (file, publicity, wrongspec = [], obligatespec = [], warn_spec = []):
 		wrongs =  wrongs_for_private
 		obligate = obligate_for_private [:]
 
-	obligate .extend (obligatespec)
+	obligate = [*obligate_for_all, *obligate, *obligatespec]
 	wrongs = join_re_lists (wrongs, wrongspec, wrongs_for_all)
 	warn_spec = join_re_lists (warn_spec)
 	bad_place = ''
